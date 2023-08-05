@@ -7,6 +7,7 @@ use App\Rules\StrictYmd;
 use DateTimeImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ExecuteController extends Controller
 {
@@ -27,6 +28,9 @@ class ExecuteController extends Controller
         $operator = $operator === 'p' ? '+' : '-';
         $resultDate = $baseDate->modify($operator . $dayNum . 'days')->format('Y/m/d');
 
-        return back()->withErrors($validator)->with('result', $resultDate);
+        session()->flash('message', sprintf('%s の %s 日%sは……', $baseDate->format('Y/m/d'), $dayNum, $operator === '+' ? '後' : '前'));
+        session()->flash('result', $resultDate);
+
+        throw ValidationException::withMessages([]);
     }
 }

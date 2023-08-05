@@ -13,6 +13,7 @@ class StrictYmd implements ValidationRule
         $dt = DateTimeImmutable::createFromFormat('Ymd', $value);
         if ($dt === false) {
             $fail('日付は YYYYMMDD 形式で指定してください');
+            return;
         }
         if ($dt->format('Ymd') !== $value) {
             $fail('日付は YYYYMMDD 形式で指定してください');

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sidearrow.net</title>
+  <title>{{ $title ?? 'sidearrow.net' }}</title>
   @vite(['resources/css/common.scss'])
 </head>
 
@@ -12,11 +12,30 @@
   <header>
     <nav class="navbar border-bottom">
       <div class="container">
-        <a class="navbar-brand" href="/">sidearrow.net</a>
+        <a class="navbar-brand" href="{{ route('index') }}">sidearrow.net</a>
       </div>
     </nav>
   </header>
   <main>
+    {{-- start breadcrumb  --}}
+    @isset($breadcrumb)
+      <div class="bg-light border-bottom">
+        <div class="container py-2">
+          <ol class="breadcrumb m-0">
+            @foreach ($breadcrumb as $item)
+              @if ($item['url'] === null)
+                <li class="breadcrumb-item active">{{ $item['title'] }}</li>
+              @else
+                <li class="breadcrumb-item">
+                  <a href="{{ $item['url'] }}">{{ $item['title'] }}</a>
+                </li>
+              @endif
+            @endforeach
+          </ol>
+        </div>
+      </div>
+    @endisset
+    {{-- end breadcrumb  --}}
     <div class="container py-4">{{ $slot }}</div>
   </main>
   <footer class="bg-light py-4">
