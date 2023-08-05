@@ -6,6 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ $title ?? 'sidearrow.net' }}</title>
   @vite(['resources/css/common.scss'])
+  @if (config('env') === 'production')
+    {{-- start gtag --}}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4H9K64SQ36"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-4H9K64SQ36');
+    </script>
+    {{-- end gtag --}}
+  @endif
 </head>
 
 <body>
